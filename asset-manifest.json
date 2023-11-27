@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/fantasy-party-gen/static/css/main.0eedb05d.css",
-    "main.js": "/fantasy-party-gen/static/js/main.67001359.js",
+    "main.css": "/fantasy-party-gen/static/css/main.e7d8f68c.css",
+    "main.js": "/fantasy-party-gen/static/js/main.373a7b20.js",
+    "static/media/ENDOR.ttf": "/fantasy-party-gen/static/media/ENDOR.fc2741e7d471c6885971.ttf",
+    "static/media/oldparchment.png": "/fantasy-party-gen/static/media/oldparchment.d965fccd363337e3140a.png",
     "index.html": "/fantasy-party-gen/index.html",
-    "main.0eedb05d.css.map": "/fantasy-party-gen/static/css/main.0eedb05d.css.map",
-    "main.67001359.js.map": "/fantasy-party-gen/static/js/main.67001359.js.map"
+    "main.e7d8f68c.css.map": "/fantasy-party-gen/static/css/main.e7d8f68c.css.map",
+    "main.373a7b20.js.map": "/fantasy-party-gen/static/js/main.373a7b20.js.map"
   },
   "entrypoints": [
-    "static/css/main.0eedb05d.css",
-    "static/js/main.67001359.js"
+    "static/css/main.e7d8f68c.css",
+    "static/js/main.373a7b20.js"
   ]
 }
