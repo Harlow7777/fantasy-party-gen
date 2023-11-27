@@ -1,5 +1,5 @@
 function gender() {
-    let genders = ['Male', 'Female'];
+    let genders = ['Male', 'Female', 'Nonbinary'];
     return getRandomItem(genders);
 }
 

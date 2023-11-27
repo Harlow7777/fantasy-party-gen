@@ -32,6 +32,7 @@ function calculateLetterPairsFrequency() {
     maxFrequency = freq > maxFrequency ? freq : maxFrequency;
   }
 
+  // console.log("pairProbabilityTable ", pairProbabilityTable);
   return [pairProbabilityTable, maxFrequency];
 };
 
@@ -58,7 +59,8 @@ function calculateLetterTripletsFrequency() {
     tripletProbabilityTable.set(triplet, freq);
     maxFrequency = freq > maxFrequency ? freq : maxFrequency;
   }
-
+  
+  // console.log("tripletProbabilityTable ", tripletProbabilityTable);
   return [tripletProbabilityTable, maxFrequency];
 };
 
@@ -88,7 +90,7 @@ function calculateFirstLetterFrequency() {
     return [firstLetterProbabilityTable, maxFrequency];
   };
 
-function test() {
+function name() {
   const maxLength = getMaxLength(maleNames);
 
   let pairProbabilityTable = calculateLetterPairsFrequency();
@@ -120,6 +122,7 @@ function getStartingLetter(firstLetterProbabilityTable) {
 
   let startingLetter = filteredAndSortedLetters[filteredAndSortedLetters.length - 1][0];
 
+  console.log("Generated starting letter ", startingLetter);
   return startingLetter;
 }
 
@@ -134,6 +137,7 @@ function getNextLetterDefault(pairProbabilityTable) {
 
 //Fix triplets in the case of a pattern match
 function getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter) {
+    prevLetter = prevLetter.toLowerCase();
     const tripletRand = Math.random() * tripletProbabilityTable[1];
     const pairRand = Math.random() * pairProbabilityTable[1];
 
@@ -141,22 +145,40 @@ function getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter
     let filteredAndSortedTriplets = new Map();
     // if we are on the first letter, check whether its at index 0 or 1, then get the next letter in the sequence
     if(prevLetter.length == 1) {
-        filteredAndSortedTriplets = Array.from(tripletProbabilityTable[0]).filter(([key, value]) => key[0] == prevLetter || key[1] == prevLetter).sort((a, b) => b[1] - a[1]);
+        filteredAndSortedTriplets = Array.from(tripletProbabilityTable[0])
+          .filter(([key, value]) => key[0].toLowerCase() == prevLetter || key[1].toLowerCase() == prevLetter)
+          .filter(([key, value]) => value >= tripletRand)
+          .sort((a, b) => b[1] - a[1]);
         if(filteredAndSortedTriplets.length != 0) {
+            console.log("filteredAndSortedTriplets based on prevLetter ", prevLetter);
+            console.log(filteredAndSortedTriplets);
             let lastTripletFromList = filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0];
+            console.log("nextLetter ", lastTripletFromList[lastTripletFromList.indexOf(prevLetter) + 1]);
             return lastTripletFromList[lastTripletFromList.indexOf(prevLetter) + 1];
         }
     // if we have a pair, check whether its the first two in the triplet, then get the last letter
     } else {
-        filteredAndSortedTriplets = Array.from(tripletProbabilityTable[0]).filter(([key, value]) => key.indexOf(prevLetter) == 0).sort((a, b) => b[1] - a[1]);
+        filteredAndSortedTriplets = Array.from(tripletProbabilityTable[0])
+          .filter(([key, value]) => key.toLowerCase().indexOf(prevLetter) == 0)
+          .filter(([key, value]) => value >= tripletRand)
+          .sort((a, b) => b[1] - a[1]);
         if(filteredAndSortedTriplets.length != 0) {
+            console.log("filteredAndSortedTriplets based on prevLetter ", prevLetter);
+            console.log(filteredAndSortedTriplets);
+            console.log("nextLetter ", filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0][2]);
             return filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0][2];
         }
     }
 
     // Check if the letter appears in any pairs
-    let filteredAndSortedPairs = Array.from(pairProbabilityTable[0]).filter(([key, value]) => key[0] == prevLetter).sort((a, b) => b[1] - a[1]);
+    let filteredAndSortedPairs = Array.from(pairProbabilityTable[0])
+      .filter(([key, value]) => key[0].toLowerCase() == prevLetter)
+      .filter(([key, value]) => value >= pairRand)
+      .sort((a, b) => b[1] - a[1]);
+
     if(filteredAndSortedPairs.length != 0) {
+        console.log("filteredAndSortedPairs based on prevLetter ", prevLetter);
+        console.log(filteredAndSortedPairs);
         return filteredAndSortedPairs[filteredAndSortedPairs.length - 1][0][1];
     }
 
@@ -168,4 +190,4 @@ function getLastLetter() {
     // create pairs and triplets with spaces at the end signifying they are the end of a name
 }
 
-export default test;
+export default name;
