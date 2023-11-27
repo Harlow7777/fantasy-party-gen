@@ -1,0 +1,9 @@
+.Character {
+    background-color: #5d6679;
+    height: 500px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: rgb(2, 15, 15);
+  }
