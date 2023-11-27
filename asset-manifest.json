@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/fantasy-party-gen/static/css/main.d35dba14.css",
+    "main.js": "/fantasy-party-gen/static/js/main.0d0bc629.js",
+    "index.html": "/fantasy-party-gen/index.html",
+    "main.d35dba14.css.map": "/fantasy-party-gen/static/css/main.d35dba14.css.map",
+    "main.0d0bc629.js.map": "/fantasy-party-gen/static/js/main.0d0bc629.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d35dba14.css",
+    "static/js/main.0d0bc629.js"
+  ]
+}
