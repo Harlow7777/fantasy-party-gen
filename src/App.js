@@ -1,6 +1,9 @@
 import './App.css';
 import Character from './components/Character.js';
 import React, { useRef, useState } from 'react';
+import { Grid } from '@mui/material';
+
+
 
 function App() {
   const quantityRef = useRef(null);
@@ -27,9 +30,9 @@ function App() {
         onMinus={minus}
         onPlus={plus}
       />
-      <div className="Party">
+      <Grid sx={{ m: 0 }} container spacing={2} className="Party">
         {charArray}
-      </div>
+      </Grid>
     </div>
   );
 }

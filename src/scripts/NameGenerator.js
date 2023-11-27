@@ -103,12 +103,17 @@ function name() {
 
   for (let i = 0; i < nameLength; i++) {
     let prevLetter = name[name.length - 1];
+    let nextLetter = '';
     if(i > 0) {
         let prevLetters = name.substring(name.length - 2);
-        name += getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetters).toLowerCase();
+        console.log("sending prevLetters ", prevLetters);
+        nextLetter = getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetters).toLowerCase();
     } else {
-        name += getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter).toLowerCase();
+        console.log("sending prevLetter ", prevLetter);
+        nextLetter = getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter).toLowerCase();
     }
+    console.log("Received nextLetter ", nextLetter);
+    name += nextLetter;
   }
 
   console.log("Generated name ", name);
@@ -126,7 +131,7 @@ function getStartingLetter(firstLetterProbabilityTable) {
   return startingLetter;
 }
 
-function getNextLetterDefault(pairProbabilityTable) {
+function getNextLetterRandom(pairProbabilityTable) {
     const rand = Math.random() * pairProbabilityTable[1];
     let filteredAndSortedPairs = Array.from(pairProbabilityTable[0]).filter(([key, value]) => value >= rand).sort((a, b) => b[1] - a[1]);
 
@@ -150,11 +155,10 @@ function getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter
           .filter(([key, value]) => value >= tripletRand)
           .sort((a, b) => b[1] - a[1]);
         if(filteredAndSortedTriplets.length != 0) {
-            console.log("filteredAndSortedTriplets based on prevLetter ", prevLetter);
+            console.log("filteredAndSortedTriplets based on prevLetter " + prevLetter);
             console.log(filteredAndSortedTriplets);
-            let lastTripletFromList = filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0];
-            console.log("nextLetter ", lastTripletFromList[lastTripletFromList.indexOf(prevLetter) + 1]);
-            return lastTripletFromList[lastTripletFromList.indexOf(prevLetter) + 1];
+            let lastTripletFromList = filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0].toLowerCase();
+            return lastTripletFromList[lastTripletFromList.indexOf(prevLetter) + 1][0];
         }
     // if we have a pair, check whether its the first two in the triplet, then get the last letter
     } else {
@@ -163,10 +167,9 @@ function getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter
           .filter(([key, value]) => value >= tripletRand)
           .sort((a, b) => b[1] - a[1]);
         if(filteredAndSortedTriplets.length != 0) {
-            console.log("filteredAndSortedTriplets based on prevLetter ", prevLetter);
-            console.log(filteredAndSortedTriplets);
-            console.log("nextLetter ", filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0][2]);
-            return filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0][2];
+          console.log("filteredAndSortedTriplets based on prevLetter " + prevLetter);
+          console.log(filteredAndSortedTriplets);
+          return filteredAndSortedTriplets[filteredAndSortedTriplets.length - 1][0][2];
         }
     }
 
@@ -179,11 +182,17 @@ function getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter
     if(filteredAndSortedPairs.length != 0) {
         console.log("filteredAndSortedPairs based on prevLetter ", prevLetter);
         console.log(filteredAndSortedPairs);
+        console.log("Grabbing last element's second char ", filteredAndSortedPairs[filteredAndSortedPairs.length - 1][0][1]);
         return filteredAndSortedPairs[filteredAndSortedPairs.length - 1][0][1];
     }
 
+    if(prevLetter.length == 2) {
+      console.log("looping with ", prevLetter[1]);
+      return getNextLetter(pairProbabilityTable, tripletProbabilityTable, prevLetter[1]);
+    }
+
     // Default to a random letter if not found in any of the probability tables
-    return getNextLetterDefault(pairProbabilityTable);
+    return getNextLetterRandom(pairProbabilityTable);
 }
 
 function getLastLetter() {
